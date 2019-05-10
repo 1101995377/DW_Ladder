@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" ng-controller="MasterCtrl" ng-csp>
+	<head>
+		<meta charset="utf-8">
+		<title ng-bind="'options_title' | tr"></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap3/bootstrap-switch.min.css"
+		      rel="stylesheet">
+		<link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="lib/spectrum/spectrum.css">
+		<link rel="stylesheet" href="lib/ladda/ladda-themeless.min.css">
+		<link rel="stylesheet" href="lib/shepherd.js/shepherd-theme-arrows.css">
+		<link rel="stylesheet" href="css/options.css">
+		<link rel="stylesheet" href="/popup/css/index.css">
+	</head>
+	<body id="body">
+
+		<div id="Line-1" class="row">
+			<div id="DW_Ladder" class="col-xs-8">DW_Ladder</div>
+			<div id="help" class="col-xs-4">帮助</div>
+		</div>
+
+		<div id="Line-2" class="row">
+			<div id="own-switch" class="col-xs-8">
+				<div class="testswitch" style="display: inline-block">
+					<input class="testswitch-checkbox" id="onoffswitch" type="checkbox">
+					<label class="testswitch-label" for="onoffswitch">
+						<span class="testswitch-inner" data-on="启用" data-off="停用"></span>
+						<span class="testswitch-switch"></span>
+					</label>
+				</div>
+			</div>
+			<div id="setting" class="col-xs-4" ng-click="modify()">配置</div>
+		</div>
+
+		<div id="main">
+			<div ng-controller="PacProfileCtrl">
+				<div id="pac-head">PAC脚本地址</div>
+				<div id="pac-input" class="input-group" controller="pacUrlCtrl.ctrl">
+					<input ng-model="profile.pacUrl" ng-attr-type="text"
+					       ng-pattern="(referenced ? urlRegex : urlWithFile) || catchAll" placeholder="请输入PAC脚本地址"
+					       ng-change="modelChange()" class="form-control"/>
+				</div>
+				<div id="pac-button" class="row" ng-show="profile.pacUrl &amp;&amp; !pacUrlIsFile">
+					<div class="col-xs-6">
+						<button ng-click="updateProfile(profile.name)" ladda="updatingProfile[profile.name]"
+						        data-spinner-color="#000000"
+						        ng-class="profile.pacUrl &amp;&amp; !profile.lastUpdate ? &quot;btn-primary&quot; : &quot;btn-default&quot;"
+						        class="btn"> 更新
+						</button>
+					</div>
+					<div class="col-xs-6">
+						<span id="updateMessage">更新成功</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<ul class="nav nav-pills nav-stacked om-nav">
+			<li class="om-nav-item" id="js-profile-tpl" style="width:30%;float:left;display:none">
+				<a href="#" id="js-direct" role="button">
+					<!--<span class="glyphicon glyphicon-transfer" style="color: #aaa;"></span>-->
+					<span class="om-profile-name"></span>
+				</a>
+			</li>
+			<li class="om-divider" id="js-profiles-end" style="display:none"></li>
+			<li id="modify" style="text-align:center"></li>
+			<!--<li id="profileSet" ng-repeat="profile in options | profiles:&quot;sorted&quot;" ui-sref-active="active" data-profile-type="{{profile.profileType}}" class="nav-profile"><a ui-sref="profile({name: profile.name})"><span omega-profile-inline="profile" options="options"></span></a></li>-->
+			<li class="om-nav-item om-nav-temprule om-has-dropdown"
+			    style="display:none;clear:both;height:auto;padding-top:0.5em;">
+				<a href="#" id="js-temprule" role="button">
+					<span class="glyphicon glyphicon-filter"></span>
+					<span>
+                  <span class="om-page-domain"></span>
+                  <span class="om-caret"></span>
+                </span>
+				</a>
+			</li>
+			<!--<li class="nav-new-profile" id="newProfile"><a role="button" ng-click="newProfile()"><span class="glyphicon glyphicon-plus"></span> <span>{{'options_newProfile' | tr}}</span></a></li>-->
+		</ul>
+
+		<main id="newMain" ui-view class="col-lg-10 col-sm-9 col-lg-offset-2 col-sm-offset-3 angular-animate"
+		></main>
+
+		<script src="js/jquery.js"></script>
+		<script src="js/omega_debug.js"></script>
+		<script src="js/log_error.js"></script>
+		<script src="lib/script.js/script.min.js"></script>
+		<script src="js/options.js"></script>
+		<script src="/popup/js/loader.js"></script>
+		<script src="js/switch.js"></script>
+	</body>
+</html>

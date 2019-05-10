@@ -1,0 +1,164 @@
+#body {
+    padding: 0.8rem;
+    min-width:15rem;
+}
+
+#Line-1 {
+    display:flex;
+    margin: 0 0 0.5rem 0;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+#DW_Ladder{
+    font-size:1.2rem;
+    font-weight:bold;
+}
+
+#help{
+    color:#00AAFF;
+}
+
+#Line-2{
+    display:flex;
+    justify-content: center;
+    margin:0;
+    align-items: flex-end;
+}
+
+#setting{
+    color:#00AAFF;
+}
+
+#main{
+    display:none;
+    background-color:#00AAFF;
+    padding:0 0.5rem;
+    color: #FFFFFF;
+}
+
+#pac-head{
+    font-size:1rem;
+    font-weight:bold;
+    padding: 0.5rem 0;
+}
+
+#pac-button{
+    margin:0;
+    padding:0.5rem 0;
+    display:flex;
+    align-items: center;
+}
+#pac-button button{
+    background-color:#FFFFFF;
+    width:3rem;
+    height:2rem;
+    padding:0;
+    color:#00AAFF;
+ }
+
+.testswitch {
+    position: relative;
+    float: left;
+    width: 6rem;
+    margin: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.testswitch-checkbox {
+    display: none;
+}
+
+.testswitch-label {
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+    margin-bottom: 0;
+    border: 1px solid #999999;
+    border-radius: 4px;
+}
+
+.testswitch-inner {
+    display: block;
+    width: 200%;
+    margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+}
+
+.testswitch-inner::before, .testswitch-inner::after {
+    display: block;
+    float: right;
+    width: 50%;
+    height: 2rem;
+    padding: 0;
+    line-height: 2rem;
+    font-size: 1rem;
+    color: white;
+    font-family: Trebuchet, Arial, sans-serif;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+
+.testswitch-inner::after {
+    content: attr(data-on);
+    padding-left: 0.5rem;
+    background-color: #0D5;
+    color: #FFFFFF;
+}
+
+.testswitch-inner::before {
+    content: attr(data-off);
+    padding-right: 0.5rem;
+    background-color: #E00;
+    color: #FFFFFF;
+    text-align: right;
+}
+
+.testswitch-switch {
+    position: absolute;
+    display: block;
+    width: 50%;
+    height: 2.1rem;
+    background: #FFFFFF;
+    top: 0;
+    bottom: 0;
+    right: 3rem;
+    border: 1px solid #999999;
+    border-radius: 4px;
+    transition: all 0.3s ease-in 0s;
+}
+
+.testswitch-checkbox:checked + .testswitch-label .testswitch-inner {
+    margin-left: 0;
+}
+
+.testswitch-checkbox:checked + .testswitch-label .testswitch-switch {
+    right: 0px;
+}
+
+a {
+    text-decoration: none;
+    color: #0AF;
+}
+
+a:link {
+    color: #0AF;
+    text-decoration: none;
+}
+
+a:active {
+    color: #0AF;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #0AF;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #0AF;
+    text-decoration: none;
+}
