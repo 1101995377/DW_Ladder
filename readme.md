@@ -6,7 +6,7 @@
 
 如图1，在浏览器中-->工具列表-->更多工具列表-->扩展程序,点击扩展程序进入图二所示扩展程序界面。
 
-![step1 png](img/Tutorial/step1.png =100*100)
+![step1 png](img/Tutorial/step1.png)
 
 <p style="text-align:center;font-weight:bold;color:#888;font-size:20px;margin-bottom:5rem">图1</p>
 

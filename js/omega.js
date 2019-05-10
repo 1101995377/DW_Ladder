@@ -55,7 +55,7 @@
         return $injector.get('omegaTarget').lastUrl();
       }
     });
-    return $stateProvider.state('profile', {
+    return ( {
       url: '/profile/*name',
       templateUrl: 'partials/profile.html',
       controller: 'ProfileCtrl'
@@ -215,7 +215,7 @@
       var _ref2;
       return ((_ref2 = $scope.profile.auth) != null ? _ref2[proxyProperties[scheme]] : void 0) != null;
     };
-    /*$scope.editProxyAuth = function(scheme) {
+    $scope.editProxyAuth = function(scheme) {
       var auth, prop, proxy, scope, _ref2;
       prop = proxyProperties[scheme];
       proxy = $scope.profile[prop];
@@ -242,7 +242,7 @@
           return $scope.profile.auth[prop] = auth;
         }
       });
-    };*/
+    };
     onProxyChange = function(proxyEditors, oldProxyEditors) {
       var proxy, _base, _j, _len1, _name, _ref2, _ref3, _results;
       if (!proxyEditors) {
@@ -596,26 +596,15 @@
         return $rootScope.applyOptions();
       });
     };
-    $rootScope.modify=function(){
-      if(document.getElementById('newMain').style.display=='block'){
-        document.getElementById('newMain').style.display='none';
-        document.getElementById('setting').style.backgroundColor='#FFF';
-        document.getElementById('settingLink').style.color='#0AF';
-        document.childNodes[1].style.height='3rem';
-      } else {
-        document.getElementById('setting').style.backgroundColor='#DDD';
-        document.getElementById('settingLink').style.color='#000';
-        document.getElementById('settingLink').style.fontSize='1.5rem';
-        document.getElementById('newMain').style.display='block';
-      }
-    };
     $rootScope.modify = function(){
-      if(document.getElementById("#main").style.display=="block"){
-        document.getElementById("#main").style.display="none";
-        document.getElementById("#setting").style.cssText="background-color:#FFFFFF;color:#00AAFF;";
+      if(document.getElementById("main").style.display=="block"){
+        document.getElementById("main").style.display="none";
+        document.getElementById("setting").style.cssText="background-color:#FFFFFF;color:#00AAFF;";
+        document.getElementById("own-switch").style.cssText="padding-bottom:0";
       }else{
-        document.getElementById("#main").style.display="block";
-        document.getElementById("#setting").style.cssText="background-color:#00AAFF;color:#FFFFFF;";
+        document.getElementById("main").style.display="block";
+        document.getElementById("setting").style.cssText="background-color:#00AAFF;color:#FFFFFF;";
+        document.getElementById("own-switch").style.cssText="padding-bottom:0.5rem";
       }
     };
     $rootScope.newProfile = function() {
@@ -650,10 +639,9 @@
         $rootScope.options[OmegaPac.Profiles.nameAsKey(profile)] = profile;
         $rootScope.updateProfile(profile.name);
         $rootScope.applyOptions();
-        return $state.go('profile', {
+        return ( {
           name: profile.name
-      //  });
-      });
+        });
     };
     $scope.updatingProfile = {};
     $rootScope.updateProfile = function(name) {
@@ -665,10 +653,10 @@
           $scope.updatingProfile[name] = true;
         } else {
           OmegaPac.Profiles.each($scope.options, function(key, profile) {
-            createMenuItemForProfile(profile);
+            /*createMenuItemForProfile(profile);
             if (!profile.builtin) {
               return $scope.updatingProfile[profile.name] = true;
-            }
+            }*/
           });
         }
         return omegaTarget.updateProfile(name, 'bypass_cache').then(function(results) {
@@ -678,6 +666,7 @@
           for (profileName in results) {
             if (!__hasProp.call(results, profileName)) continue;
             result = results[profileName];
+            console.log(result);
             if (result instanceof Error) {
               error++;
             } else {
@@ -685,9 +674,9 @@
             }
           }
           if (error === 0) {
-              document.querySelector('#updateMessage').textContent="更新成功";
-            document.querySelector('#updateMessage').title="";
-              document.querySelector('#updateMessage').style="color:#0B0;font-size:1.3rem;display:inline-block;position:relative;left:40%";
+            document.querySelector('#update-message').textContent="更新成功";
+            document.querySelector('#update-message').title="";
+            document.querySelector('#update-message').style="color:#0F0;font-size:1rem";
             return $rootScope.showAlert({
               type: 'success',
               i18n: 'options_profileDownloadSuccess'
@@ -706,15 +695,11 @@
           var message, _ref2, _ref3, _ref4;
           message = tr('options_profileDownloadError_' + err.name, [(_ref2 = (_ref3 = err.statusCode) != null ? _ref3 : (_ref4 = err.original) != null ? _ref4.statusCode : void 0) != null ? _ref2 : '']);
           if (message) {
-            document.querySelector('#updateMessage').textContent="更新失败";
-            document.querySelector('#updateMessage').style="color:#F00;font-size:1.3rem;display:inline-block;position:relative;left:40%";
-            document.querySelector('#updateMessage').title=message;
+            document.querySelector('#update-message').textContent="更新失败";
+            document.querySelector('#update-message').style="color:#F00;font-size:1rem;";
+            document.querySelector('#update-message').title=message;
             $rootScope.options['+启用'].pacUrl=oldPacUrl;
             return $rootScope.applyOptions();
-            /*return $rootScope.showAlert({
-              type: 'error',
-              message: message
-            });*/
           } else {
             return $rootScope.showAlert({
               type: 'error',
@@ -794,8 +779,6 @@
           return;
         }else{
           $rootScope.newProfile();
-          //$rootScope.updateProfile('profile');
-          //OmegaPopup.applyProfile('direct');
         }
         omegaTarget.state('firstRun', '');
         profileName = null;
@@ -826,53 +809,30 @@
     $scope.pacUrlCtrl = {
       ctrl: null
     };
-    set = OmegaPac.Profiles.referencedBySet($scope.profile, $scope.options);
-    $scope.referenced = Object.keys(set).length > 0;
-    oldPacUrl = null;
-    oldLastUpdate = null;
-    oldPacScript = null;
-    onProfileChange = function(profile, oldProfile) {
-      if (!(profile && oldProfile)) {
+      set = OmegaPac.Profiles.referencedBySet($scope.profile, $scope.options);
+      $scope.referenced = Object.keys(set).length > 0;
+      oldPacUrl = null;
+      oldLastUpdate = null;
+      oldPacScript = null;
+      onProfileChange = function(profile, oldProfile) {
+        if (!(profile && oldProfile)) {
+          return $scope.pacUrlIsFile = $scope.isFileUrl(profile.pacUrl);
+        }
+        if (profile.pacUrl !== oldProfile.pacUrl) {
+          if (profile.lastUpdate) {
+            oldPacUrl = oldProfile.pacUrl;
+            oldLastUpdate = profile.lastUpdate;
+            oldPacScript = oldProfile.pacScript;
+            profile.lastUpdate = null;
+          } else if (oldPacUrl && profile.pacUrl === oldPacUrl) {
+            profile.lastUpdate = oldLastUpdate;
+            profile.pacScript = oldPacScript;
+          }
+        }
         return $scope.pacUrlIsFile = $scope.isFileUrl(profile.pacUrl);
-      }
-      if (profile.pacUrl !== oldProfile.pacUrl) {
-        if (profile.lastUpdate) {
-          oldPacUrl = oldProfile.pacUrl;
-          oldLastUpdate = profile.lastUpdate;
-          oldPacScript = oldProfile.pacScript;
-          profile.lastUpdate = null;
-        } else if (oldPacUrl && profile.pacUrl === oldPacUrl) {
-          profile.lastUpdate = oldLastUpdate;
-          profile.pacScript = oldPacScript;
-        }
-      }
-      return $scope.pacUrlIsFile = $scope.isFileUrl(profile.pacUrl);
-    };
-    $scope.$watch('profile', onProfileChange, true);
-    /*return $scope.editProxyAuth = function(scheme) {
-      var auth, prop, scope, _ref;
-      prop = 'all';
-      auth = (_ref = $scope.profile.auth) != null ? _ref[prop] : void 0;
-      scope = $scope.$new('isolate');
-      scope.auth = auth && angular.copy(auth);
-      return $modal.open({
-        templateUrl: 'partials/fixed_auth_edit.html',
-        scope: scope,
-        size: 'sm'
-      }).result.then(function(auth) {
-        var _base;
-        if (!(auth != null ? auth.username : void 0)) {
-          if ($scope.profile.auth) {
-            return $scope.profile.auth[prop] = void 0;
-          }
-        } else {
-          if ((_base = $scope.profile).auth == null) {
-            _base.auth = {};
-          }
-          return $scope.profile.auth[prop] = auth;
-        }
-      });
-    };*/
+      };
+      $scope.$watch('profile', onProfileChange, true);
+
   });
 
 }).call(this);

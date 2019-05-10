@@ -31,11 +31,11 @@
   return init();
 
   function init() {
-    walker = document.createTreeWalker(
+    /*walker = document.createTreeWalker(
       document.querySelector('.om-nav'),
       NodeFilter.SHOW_ELEMENT,
       {acceptNode: tabbableElementsOnly}
-    );
+    );*/
 
     window.addEventListener('keydown', function(e) {
       var handler = keyHandler[e.keyCode];
@@ -55,7 +55,7 @@
     });
   }
 
-  function tabbableElementsOnly(node) {
+  /*function tabbableElementsOnly(node) {
     if (node.classList.contains('om-hidden')) {
       return NodeFilter.FILTER_REJECT;
     } else if (node.classList.contains('om-dropdown') &&
@@ -66,7 +66,7 @@
     } else {
       return NodeFilter.FILTER_SKIP;
     }
-  }
+  }*/
 
   function moveUp() {
     walker.currentNode = document.activeElement;
