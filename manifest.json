@@ -1,5 +1,5 @@
 {
-   "name": "DW",
+   "name": "DW_Ladder",
    "version": "1.0.1",
    "manifest_version": 2,
    "description": "DW代理插件使用PAC情景模式进行代理",
@@ -21,7 +21,7 @@
          "32": "img/icons/dw-logo-32.png"
       },
       "default_popup": "options.html",
-      "default_title": "SZQJ-Ladder"
+      "default_title": "DW-Ladder"
    },
    "background": {
       "page": "background.html"

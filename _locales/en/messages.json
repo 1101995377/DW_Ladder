@@ -102,7 +102,7 @@
       "message": "ERROR: The stored options are corrupted. Click here to RESET OPTIONS."
    },
    "browserAction_titleWithResult": {
-      "message": "SZQJ-Ladder:: $PROFILE$\n$DETAILS$",
+      "message": "DW-Ladder:: $PROFILE$\n$DETAILS$",
       "placeholders": {
          "DETAILS": {
             "content": "$3"

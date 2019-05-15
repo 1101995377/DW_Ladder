@@ -102,7 +102,7 @@
       "message": "错误：选项文件已经损坏，点击此处重置选项。"
    },
    "browserAction_titleWithResult": {
-      "message": "SZQJ-Ladder:: $PROFILE$\n$DETAILS$",
+      "message": "DW-Ladder:: $PROFILE$\n$DETAILS$",
       "placeholders": {
          "DETAILS": {
             "content": "$3"

@@ -102,7 +102,7 @@
       "message": "خطا : تنظیمات دخیره شده خراب شده اند .برای ریست کردن تنظیمات کلیک کنید ."
    },
    "browserAction_titleWithResult": {
-      "message": "SZQJ-Ladder ::  $PROFILE$\n $DETAILS$",
+      "message": "DW-Ladder ::  $PROFILE$\n $DETAILS$",
       "placeholders": {
          "DETAILS": {
             "content": "$3"

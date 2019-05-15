@@ -102,7 +102,7 @@
       "message": "Chyba: Uložené volby jsou poškozeny. Chcete-li obnovit možnosti klikněte zde."
    },
    "browserAction_titleWithResult": {
-      "message": "SZQJ-Ladder:: $PROFILE$\n$DETAILS$",
+      "message": "DW-Ladder:: $PROFILE$\n$DETAILS$",
       "placeholders": {
          "DETAILS": {
             "content": "$3"

@@ -102,7 +102,7 @@
       "message": "錯誤：選項檔案已經損壞，點選此處重設選項。"
    },
    "browserAction_titleWithResult": {
-      "message": "SZQJ-Ladder:: $PROFILE$\n$DETAILS$",
+      "message": "DW-Ladder:: $PROFILE$\n$DETAILS$",
       "placeholders": {
          "DETAILS": {
             "content": "$3"

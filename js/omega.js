@@ -582,19 +582,13 @@
       }
     };
     $rootScope.applyOptionsConfirm = function() {
-      console.log($rootScope.profileByName('启用'));
       if (!checkFormValid()) {
         return $q.reject('form_invalid');
       }
       if (!$rootScope.optionsDirty) {
         return $q.when(true);
       }
-      return $modal.open({
-        templateUrl: 'partials/apply_options_confirm.html'
-      }).result.then(function() {
-        console.log($rootScope.profileByName('启用'));
-        return $rootScope.applyOptions();
-      });
+      return $rootScope.applyOptions();
     };
     $rootScope.modify = function(){
       if(document.getElementById("main").style.display=="block"){
@@ -628,7 +622,6 @@
         color:'#0D5',
         pacUrl:'http://10.0.0.15/pac.js'
       };
-
       var choice;
       choice = Math.floor(Math.random() * profileColors.length);
       if (profile.color == null) {
@@ -645,20 +638,13 @@
     };
     $scope.updatingProfile = {};
     $rootScope.updateProfile = function(name) {
+      document.getElementById("update-message").style.display="none";
+      document.getElementById("loadingSpinner").style.display="block";
+      console.log($rootScope.options['+启用'].pacUrl);
       if($rootScope.optionsOld['+启用']){
         var oldPacUrl=$rootScope.optionsOld['+启用'].pacUrl
       }
       return $rootScope.applyOptionsConfirm().then(function() {
-        if (name != null) {
-          $scope.updatingProfile[name] = true;
-        } else {
-          OmegaPac.Profiles.each($scope.options, function(key, profile) {
-            /*createMenuItemForProfile(profile);
-            if (!profile.builtin) {
-              return $scope.updatingProfile[profile.name] = true;
-            }*/
-          });
-        }
         return omegaTarget.updateProfile(name, 'bypass_cache').then(function(results) {
           var error, profileName, result, singleErr, success;
           success = 0;
@@ -683,8 +669,7 @@
             });
           } else {
             if (error === 1) {
-              console.log($rootScope.profileByName('启用'));
-              singleErr = results[OmegaPac.Profiles.nameAsKey(name)];
+              singleErr = results[OmegaPac.Profiles.nameAsKey("启用")];
               if (singleErr) {
                 return $q.reject(singleErr);
               }
@@ -692,6 +677,7 @@
             return $q.reject(results);
           }
         })["catch"](function(err) {
+          console.log(err);
           var message, _ref2, _ref3, _ref4;
           message = tr('options_profileDownloadError_' + err.name, [(_ref2 = (_ref3 = err.statusCode) != null ? _ref3 : (_ref4 = err.original) != null ? _ref4.statusCode : void 0) != null ? _ref2 : '']);
           if (message) {
@@ -707,6 +693,7 @@
             });
           }
         })["finally"](function() {
+            document.getElementById("loadingSpinner").style.display="none";
             if (name != null) {
               return $scope.updatingProfile[name] = false;
             } else {
@@ -801,7 +788,7 @@
 
 (function() {
   ///新建情景模式显示
-  angular.module('omega').controller('PacProfileCtrl', function($scope, $modal) {
+  angular.module('omega').controller('PacProfileCtrl', function($rootScope,$scope, $modal) {
     var oldLastUpdate, oldPacScript, oldPacUrl, onProfileChange, set;
     $scope.urlRegex = /^(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/;
     $scope.urlWithFile = /^(ftp|http|https|file):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/;
@@ -809,6 +796,7 @@
     $scope.pacUrlCtrl = {
       ctrl: null
     };
+    console.log($scope.profile);
       set = OmegaPac.Profiles.referencedBySet($scope.profile, $scope.options);
       $scope.referenced = Object.keys(set).length > 0;
       oldPacUrl = null;
@@ -1603,10 +1591,10 @@
 }).call(this);
 
 (function() {
-  angular.module('omega').directive('inputGroupClear', function($timeout) {
+  angular.module('omega').directive('inputGroupClear', function($timeout,$rootScope) {
     return {
       restrict: 'A',
-      templateUrl: 'partials/input_group_clear.html',
+      templateUrl:"partials/input_group_clear.html",
       scope: {
         'model': '=model',
         'type': '@type',
@@ -1623,6 +1611,7 @@
         scope.controller = scope.input;
         scope.modelChange = function() {
           if (scope.model) {
+            $rootScope.profileByName("启用").pacUrl=scope.model;
             return scope.oldModel = '';
           }
         };
@@ -1758,4 +1747,25 @@
     };
   });
 
+}).call(this);
+
+(function(){
+  angular.module('omega').directive('ngLoading', function (Session, $compile) {
+        var loadingSpinner = '<img src="https://img.icons8.com/color/48/000000/spinner-frame-7.png">';
+        return {
+          restrict: 'A',
+          link: function (scope, element, attrs) {
+            var originalContent = element.html();
+            element.html(loadingSpinner);
+            scope.$watch(attrs.ngLoading, function (val) {
+              if(val) {
+                element.html(originalContent);
+                $compile(element.contents())(scope);
+              } else {
+                element.html(loadingSpinner);
+              }
+            });
+          }
+        };
+      });
 }).call(this);

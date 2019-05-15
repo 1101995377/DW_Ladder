@@ -194,15 +194,17 @@
       if (direct) {
         resultColor = options.profile('direct').color;
         profileColor = profile.color;
+        chrome.browserAction.setIcon({path: "img/icons/dw-logo-disable-16.png"});
       } else if (profile.name === current.name && options.isCurrentProfileStatic()) {
         resultColor = profileColor = profile.color;
-        icon = drawIcon(profile.color);
+        if(profile.name=="direct"){
+          chrome.browserAction.setIcon({path: "img/icons/dw-logo-disable-16.png"});
+        }else{
+          chrome.browserAction.setIcon({path: "img/icons/dw-logo-16.png"});
+        }
       } else {
         resultColor = profile.color;
         profileColor = current.color;
-      }
-      if (icon == null) {
-        icon = drawIcon(resultColor, profileColor);
       }
       shortTitle = 'Omega: ' + currentName;
       if (profile.name !== currentName) {
@@ -211,7 +213,6 @@
       return {
         title: chrome.i18n.getMessage('browserAction_titleWithResult', [currentName, dispName(profile.name), details]),
         shortTitle: shortTitle,
-        icon: icon,
         resultColor: resultColor,
         profileColor: profileColor
       };
@@ -370,12 +371,16 @@
       options.setBadge();
     }
     if (!current.name || !OmegaPac.Profiles.isInclusive(current)) {
-      icon = drawIcon(current.color);
+      if(current.name=="direct"){
+        chrome.browserAction.setIcon({path: "img/icons/dw-logo-disable-16.png"});
+      }else{
+        chrome.browserAction.setIcon({path: "img/icons/dw-logo-16.png"});
+      }
     } else {
-      icon = drawIcon(options.profile('direct').color, current.color);
+      chrome.browserAction.setIcon({path: "img/icons/dw-logo-16.png"});
     }
+
     return tabs.resetAll({
-      icon: icon,
       title: title,
       shortTitle: shortTitle
     });
