@@ -67,46 +67,6 @@
 
   drawError = null;
 
-  drawIcon = function(resultColor, profileColor) {
-    var cacheKey, e, icon, size, _i, _len, _ref;
-    cacheKey = "omega+" + (resultColor != null ? resultColor : '') + "+" + profileColor;
-    icon = iconCache[cacheKey];
-    if (icon) {
-      return icon;
-    }
-    try {
-      if (drawContext == null) {
-        drawContext = document.getElementById('canvas-icon').getContext('2d');
-      }
-      icon = {};
-      _ref = [16, 19, 24, 32, 38];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        size = _ref[_i];
-        drawContext.scale(size, size);
-        drawContext.clearRect(0, 0, 1, 1);
-        if (resultColor != null) {
-          drawOmega(drawContext, resultColor, profileColor);
-        } else {
-          drawOmega(drawContext, profileColor);
-        }
-        drawContext.setTransform(1, 0, 0, 1, 0, 0);
-        icon[size] = drawContext.getImageData(0, 0, size, size);
-        if (icon[size].data[3] === 255) {
-          throw new Error('Icon drawing blocked by privacy.resistFingerprinting.');
-        }
-      }
-    } catch (_error) {
-      e = _error;
-      if (drawError == null) {
-        drawError = e;
-        Log.error(e);
-        Log.error('Profile-colored icon disabled. Falling back to static icon.');
-      }
-      icon = null;
-    }
-    return iconCache[cacheKey] = icon;
-  };
-
   charCodeUnderscore = '_'.charCodeAt(0);
 
   isHidden = function(name) {
@@ -485,3 +445,4 @@
   });
 
 }).call(this);
+

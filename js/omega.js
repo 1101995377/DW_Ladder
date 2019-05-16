@@ -46,22 +46,6 @@
     return name.charCodeAt(0) === charCodeUnderscore && name.charCodeAt(1) === charCodeUnderscore;
   });
 
-  angular.module('omega').config(function($stateProvider, $urlRouterProvider, $httpProvider, $animateProvider, $compileProvider) {
-    $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|moz-extension):/);
-    $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|local|data|chrome-extension|moz-extension):/);
-    $animateProvider.classNameFilter(/angular-animate/);
-    $urlRouterProvider.otherwise(function($injector, $location) {
-      if ($location.path() === '') {
-        return $injector.get('omegaTarget').lastUrl();
-      }
-    });
-    return ( {
-      url: '/profile/*name',
-      templateUrl: 'partials/profile.html',
-      controller: 'ProfileCtrl'
-    });
-  });
-
   angular.module('omega').factory('$exceptionHandler', function($log) {
     return function(exception, cause) {
       if (exception.message === 'transition aborted') {
@@ -135,28 +119,6 @@
 }).call(this);
 
 (function() {
-  angular.module('omega').controller('AboutCtrl', function($scope, $rootScope, $modal, omegaDebug) {
-    var _;
-    $scope.downloadLog = omegaDebug.downloadLog;
-    $scope.reportIssue = omegaDebug.reportIssue;
-    $scope.showResetOptionsModal = function() {
-      return $modal.open({
-        templateUrl: 'partials/reset_options_confirm.html'
-      }).result.then(function() {
-        return omegaDebug.resetOptions();
-      });
-    };
-    try {
-      return $scope.version = omegaDebug.getProjectVersion();
-    } catch (_error) {
-      _ = _error;
-      return $scope.version = '?.?.?';
-    }
-  });
-
-}).call(this);
-
-(function() {
   angular.module('omega').controller('FixedProfileCtrl', function($scope, $modal, trFilter) {
     var defaultLabel, defaultPort, onBypassListChange, onProxyChange, proxyProperties, scheme, socks5AuthSupported, _fn, _i, _j, _len, _len1, _ref, _ref1, _ref2;
     $scope.urlSchemes = ['', 'http', 'https', 'ftp'];
@@ -214,34 +176,6 @@
     $scope.isProxyAuthActive = function(scheme) {
       var _ref2;
       return ((_ref2 = $scope.profile.auth) != null ? _ref2[proxyProperties[scheme]] : void 0) != null;
-    };
-    $scope.editProxyAuth = function(scheme) {
-      var auth, prop, proxy, scope, _ref2;
-      prop = proxyProperties[scheme];
-      proxy = $scope.profile[prop];
-      scope = $scope.$new('isolate');
-      scope.proxy = proxy;
-      auth = (_ref2 = $scope.profile.auth) != null ? _ref2[prop] : void 0;
-      scope.auth = auth && angular.copy(auth);
-      scope.authSupported = $scope.authSupported[proxy.scheme];
-      scope.protocolDisp = proxy.scheme;
-      return $modal.open({
-        templateUrl: 'partials/fixed_auth_edit.html',
-        scope: scope,
-        size: scope.authSupported ? 'sm' : 'lg'
-      }).result.then(function(auth) {
-        var _base;
-        if (!(auth != null ? auth.username : void 0)) {
-          if ($scope.profile.auth) {
-            return $scope.profile.auth[prop] = void 0;
-          }
-        } else {
-          if ((_base = $scope.profile).auth == null) {
-            _base.auth = {};
-          }
-          return $scope.profile.auth[prop] = auth;
-        }
-      });
     };
     onProxyChange = function(proxyEditors, oldProxyEditors) {
       var proxy, _base, _j, _len1, _name, _ref2, _ref3, _results;
@@ -597,7 +531,7 @@
         document.getElementById("own-switch").style.cssText="padding-bottom:0";
       }else{
         document.getElementById("main").style.display="block";
-        document.getElementById("setting").style.cssText="background-color:#00AAFF;color:#FFFFFF;";
+        document.getElementById("setting").style.cssText="background-color:rgb(248,249,250);color:#000;height:2.6rem;line-height:2.25rem;";
         document.getElementById("own-switch").style.cssText="padding-bottom:0.5rem";
       }
     };
@@ -821,148 +755,6 @@
       };
       $scope.$watch('profile', onProfileChange, true);
 
-  });
-
-}).call(this);
-
-(function() {
-  var __hasProp = {}.hasOwnProperty;
-
-  ///更新设置页面
-  angular.module('omega').controller('ProfileCtrl', function($scope, $stateParams, $location, $rootScope, $timeout, $state, $modal, profileColorPalette, getAttachedName, getParentName, getVirtualTarget) {
-    var name, profileTemplates, unwatch;
-    name = $stateParams.name;
-    profileTemplates = {
-      'PacProfile': 'profile_pac.html'
-    };
-    $scope.spectrumOptions = {
-      localStorageKey: 'spectrum.profileColor',
-      palette: profileColorPalette,
-      preferredFormat: 'hex',
-      showButtons: false,
-      showInitial: true,
-      showInput: true,
-      showPalette: true,
-      showSelectionPalette: true,
-      maxSelectionSize: 5
-    };
-    $scope.getProfileColor = function() {
-      var color, profile;
-      color = void 0;
-      profile = $scope.profile;
-      while (profile) {
-        color = profile.color;
-        profile = getVirtualTarget(profile, $scope.options);
-      }
-      return color;
-    };
-    /*$scope.deleteProfile = function() {
-      var key, parent, pname, profileName, refProfiles, refSet, refs, scope;
-      profileName = $scope.profile.name;
-      refs = OmegaPac.Profiles.referencedBySet(profileName, $rootScope.options);
-      scope = $rootScope.$new('isolate');
-      scope.profile = $scope.profile;
-      scope.dispNameFilter = $scope.dispNameFilter;
-      scope.options = $scope.options;
-      if (Object.keys(refs).length > 0) {
-        refSet = {};
-        for (key in refs) {
-          if (!__hasProp.call(refs, key)) continue;
-          pname = refs[key];
-          parent = getParentName(pname);
-          if (parent) {
-            key = OmegaPac.Profiles.nameAsKey(parent);
-            pname = parent;
-          }
-          refSet[key] = pname;
-        }
-        refProfiles = [];
-        for (key in refSet) {
-          if (!__hasProp.call(refSet, key)) continue;
-          refProfiles.push(OmegaPac.Profiles.byKey(key, $rootScope.options));
-        }
-        scope.refs = refProfiles;
-        $modal.open({
-          templateUrl: 'partials/cannot_delete_profile.html',
-          scope: scope
-        });
-      } else {
-        return $modal.open({
-          templateUrl: 'partials/delete_profile.html',
-          scope: scope
-        }).result.then(function() {
-          var attachedName, i, quickSwitch, _i, _ref;
-          attachedName = getAttachedName(profileName);
-          delete $rootScope.options[OmegaPac.Profiles.nameAsKey(attachedName)];
-          delete $rootScope.options[OmegaPac.Profiles.nameAsKey(profileName)];
-          if ($rootScope.options['-startupProfileName'] === profileName) {
-            $rootScope.options['-startupProfileName'] = "";
-          }
-          quickSwitch = $rootScope.options['-quickSwitchProfiles'];
-          for (i = _i = 0, _ref = quickSwitch.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
-            if (profileName === quickSwitch[i]) {
-              quickSwitch.splice(i, 1);
-              break;
-            }
-          }
-          return $state.go('ui');
-        });
-      }
-    };*/
-
-    $scope.watchAndUpdateRevision = function(expression) {
-      var onChange, revisionChanged;
-      revisionChanged = false;
-      onChange = function(profile, oldProfile) {
-        if (profile === oldProfile || !profile || !oldProfile) {
-          return profile;
-        }
-        if (revisionChanged && profile.revision !== oldProfile.revision) {
-          return revisionChanged = false;
-        } else {
-          OmegaPac.Profiles.updateRevision(profile);
-          return revisionChanged = true;
-        }
-      };
-      return this.$watch(expression, onChange, true);
-    };
-    $scope.exportRuleList = null;
-    $scope.exportRuleListOptions = null;
-    $scope.setExportRuleListHandler = function(exportRuleList, options) {
-      $scope.exportRuleList = exportRuleList;
-      return $scope.exportRuleListOptions = options;
-    };
-    return unwatch = $scope.$watch((function() {
-      var _ref;
-      return (_ref = $scope.options) != null ? _ref['+' + name] : void 0;
-    }), function(profile) {
-      var unwatch2;
-      if (!profile) {
-        if ($scope.options) {
-          unwatch();
-          $location.path('/');
-        } else {
-          unwatch2 = $scope.$watch('options', function() {
-            if ($scope.options) {
-              unwatch2();
-              if (!$scope.options['+' + name]) {
-                unwatch();
-                return $location.path('/');
-              }
-            }
-          });
-        }
-        return;
-      }
-      if (OmegaPac.Profiles.formatByType[profile.profileType]) {
-        profile.format = OmegaPac.Profiles.formatByType[profile.profileType];
-        profile.profileType = 'RuleListProfile';
-      }
-      $scope.profile = profile;
-      $scope.profileTemplate = 'partials/' + 'profile_pac.html';
-      $scope.scriptable = true;
-      return $scope.watchAndUpdateRevision('profile');
-    });
   });
 
 }).call(this);
@@ -1243,25 +1035,6 @@
       delete condition.startDay;
       return delete condition.endDay;
     };
-    $scope.removeRule = function(index) {
-      var removeForReal, scope;
-      removeForReal = function() {
-        return $scope.profile.rules.splice(index, 1);
-      };
-      if ($scope.options['-confirmDeletion']) {
-        scope = $scope.$new('isolate');
-        scope.rule = $scope.profile.rules[index];
-        scope.ruleProfile = $scope.profileByName(scope.rule.profileName);
-        scope.dispNameFilter = $scope.dispNameFilter;
-        scope.options = $scope.options;
-        return $modal.open({
-          templateUrl: 'partials/rule_remove_confirm.html',
-          scope: scope
-        }).result.then(removeForReal);
-      } else {
-        return removeForReal();
-      }
-    };
     $scope.cloneRule = function(index) {
       var rule;
       rule = angular.copy($scope.profile.rules[index]);
@@ -1288,26 +1061,6 @@
         return unwatchRulesShowNote();
       }
     }), true);
-    $scope.resetRules = function() {
-      var scope;
-      scope = $scope.$new('isolate');
-      scope.ruleProfile = $scope.profileByName($scope.attachedOptions.defaultProfileName);
-      scope.dispNameFilter = $scope.dispNameFilter;
-      scope.options = $scope.options;
-      return $modal.open({
-        templateUrl: 'partials/rule_reset_confirm.html',
-        scope: scope
-      }).result.then(function() {
-        var rule, _j, _len1, _ref, _results;
-        _ref = $scope.profile.rules;
-        _results = [];
-        for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
-          rule = _ref[_j];
-          _results.push(rule.profileName = $scope.attachedOptions.defaultProfileName);
-        }
-        return _results;
-      });
-    };
     $scope.sortableOptions = {
       handle: '.sort-bar',
       tolerance: 'pointer',
@@ -1400,23 +1153,6 @@
       $scope.attachedOptions.enabled = true;
       return $scope.profile.defaultProfileName = $scope.attachedName;
     };
-    /*$scope.removeAttached = function() {
-      var scope;
-      if (!$scope.attached) {
-        return;
-      }
-      scope = $scope.$new('isolate');
-      scope.attached = $scope.attached;
-      scope.dispNameFilter = $scope.dispNameFilter;
-      scope.options = $scope.options;
-      return $modal.open({
-        templateUrl: 'partials/delete_attached.html',
-        scope: scope
-      }).result.then(function() {
-        $scope.profile.defaultProfileName = $scope.attached.defaultProfileName;
-        return delete $scope.options[$scope.attachedKey];
-      });
-    };*/
     stateEditorKey = 'web._profileEditor.' + $scope.profile.name;
     $scope.loadRules = false;
     $scope.editSource = false;

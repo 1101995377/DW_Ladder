@@ -1,6 +1,6 @@
 #body {
     padding: 0.8rem;
-    min-width:15rem;
+    min-width:12rem;
 }
 
 #Line-1 {
@@ -16,25 +16,29 @@
 }
 
 #help{
+    text-align:center;
     color:#00AAFF;
+    text-decoration:underline;
 }
 
 #Line-2{
     display:flex;
     justify-content: center;
     margin:0;
-    align-items: flex-end;
+    align-items: center;
 }
 
 #setting{
+    text-align:center;
     color:#00AAFF;
+    cursor: pointer;
+    text-decoration:underline;
 }
 
 #main{
     display:none;
-    background-color:#00AAFF;
+    background-color:rgb(248,249,250);
     padding:0 0.5rem;
-    color: #FFFFFF;
 }
 
 #pac-head{
@@ -69,6 +73,18 @@
     100%{ -webkit-transform: rotate(360deg);}
 }
 
+.col-xs-4{
+    padding:0;
+}
+
+.col-xs-6{
+    padding:0;
+}
+
+.col-xs-8{
+    padding:0;
+}
+
 .testswitch {
     position: relative;
     float: left;
@@ -96,7 +112,7 @@
     display: block;
     width: 200%;
     margin-left: -100%;
-    transition: margin 0.3s ease-in 0s;
+    transition: margin 0s ease-in 0s;
 }
 
 .testswitch-inner::before, .testswitch-inner::after {
@@ -139,7 +155,7 @@
     right: 3rem;
     border: 1px solid #999999;
     border-radius: 4px;
-    transition: all 0.3s ease-in 0s;
+    transition: all 0s ease-in 0s;
 }
 
 .testswitch-checkbox:checked + .testswitch-label .testswitch-inner {
