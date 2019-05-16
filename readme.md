@@ -1,3 +1,10 @@
+<style>
+  img{
+    width:10rem;
+  }
+</style>
+
+
 # DW-Ladder 使用教程
 ## 一、添加DW插件
 ### 1、打开扩展程序
