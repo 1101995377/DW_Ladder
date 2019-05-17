@@ -4,7 +4,7 @@
 
 <img src="img/Tutorial/step1.gif" width="70%">
 
-<p style=" width:'70%';align:'center'">图1</p>
+<p style=" width:70%;align:center">图1</p>
 
 ### 2、开启开发者模式
 
