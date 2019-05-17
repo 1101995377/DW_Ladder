@@ -26,7 +26,7 @@
 <p align="center"><img src="img/Tutorial/step4.gif" width="60%"></p>
 
 <p align="center">图4</p>
-git
+
 ### 2、配置更新
 
 <p align="center"><img src="img/Tutorial/step5.gif" width="60%"></p>
