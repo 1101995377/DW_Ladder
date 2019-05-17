@@ -527,12 +527,12 @@
     $rootScope.modify = function(){
       if(document.getElementById("main").style.display=="block"){
         document.getElementById("main").style.display="none";
-        document.getElementById("setting").style.cssText="background-color:#FFFFFF;color:#00AAFF;";
+        document.getElementById("setting").style.cssText="background-color:#FFFFFF;color:#49c5b6;";
         document.getElementById("own-switch").style.cssText="padding-bottom:0";
       }else{
         document.getElementById("main").style.display="block";
-        document.getElementById("setting").style.cssText="background-color:rgb(248,249,250);color:#000;height:2.6rem;line-height:2.25rem;";
-        document.getElementById("own-switch").style.cssText="padding-bottom:0.5rem";
+        document.getElementById("setting").style.cssText="background-color:rgb(248,249,250);color:#000;height:1.7rem";
+        document.getElementById("own-switch").style.cssText="padding-bottom:0.3rem";
       }
     };
     $rootScope.newProfile = function() {
@@ -594,9 +594,10 @@
             }
           }
           if (error === 0) {
+            document.getElementById("loadingSpinner").style.display="none";
             document.querySelector('#update-message').textContent="更新成功";
             document.querySelector('#update-message').title="";
-            document.querySelector('#update-message').style="color:#0F0;font-size:1rem";
+            document.querySelector('#update-message').style="color:#0C0;font-size:0.5rem";
             return $rootScope.showAlert({
               type: 'success',
               i18n: 'options_profileDownloadSuccess'
@@ -615,6 +616,7 @@
           var message, _ref2, _ref3, _ref4;
           message = tr('options_profileDownloadError_' + err.name, [(_ref2 = (_ref3 = err.statusCode) != null ? _ref3 : (_ref4 = err.original) != null ? _ref4.statusCode : void 0) != null ? _ref2 : '']);
           if (message) {
+            document.getElementById("loadingSpinner").style.display="none";
             document.querySelector('#update-message').textContent="更新失败";
             document.querySelector('#update-message').style="color:#F00;font-size:1rem;";
             document.querySelector('#update-message').title=message;
@@ -627,7 +629,6 @@
             });
           }
         })["finally"](function() {
-            document.getElementById("loadingSpinner").style.display="none";
             if (name != null) {
               return $scope.updatingProfile[name] = false;
             } else {
@@ -1334,9 +1335,9 @@
       scope: {
         'model': '=model',
         'type': '@type',
-        'ngPattern': '=?ngPattern',
+        //'ngPattern': '=?ngPattern',
         'placeholder': '@placeholder',
-        'controller': '=?controller'
+        //'controller': '=?controller'
       },
       link: function(scope, element, attrs) {
         scope.catchAll = new RegExp('');

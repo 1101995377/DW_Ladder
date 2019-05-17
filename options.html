@@ -29,19 +29,19 @@
 					</label>
 				</div>
 			</div>
-			<div id="setting" class="col-xs-4" ng-click="modify()">配置</div>
+			<div id="setting" class="col-xs-4" ng-click="modify()"><span>配置</span></div>
 		</div>
 
 		<div id="main">
 			<div>
 				<div id="pac-head">PAC脚本地址</div>
-				<div id="pac-input" class="input-group" controller="pacUrlCtrl.ctrl" input-group-clear model="profile.pacUrl">
-					<input id="pac-input-input" ng-model="model" ng-attr-type="text"
-					       ng-pattern="(referenced ? urlRegex : urlWithFile) || catchAll" placeholder="请输入PAC脚本地址"
-					       ng-change="modelChange()" class="form-control"/>
+				<div id="pac-input" input-group-clear model="profile.pacUrl">
+					<input ng-model="model" ng-attr-type="text"
+					       placeholder="请输入PAC脚本地址"
+					       ng-change="modelChange()"/>
 				</div>
 				<div id="pac-button" class="row" ng-show="profile.pacUrl &amp;&amp; !pacUrlIsFile">
-					<div class="col-xs-6">
+					<div id="pac-button-div1" class="col-xs-6">
 						<button id="pac-button-button"
 						        ng-click="updateProfile(profile.name)" ladda="updatingProfile[profile.name]"
 						        data-spinner-color="#000000"
@@ -49,7 +49,7 @@
 						        class="btn"> 更新
 						</button>
 					</div>
-					<div class="col-xs-6">
+					<div id="pac-button-div2" class="col-xs-6">
 						<span id="update-message"></span>
 						<img id="loadingSpinner" src="https://img.icons8.com/color/48/000000/spinner-frame-7.png">
 					</div>
