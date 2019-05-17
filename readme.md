@@ -2,7 +2,7 @@
 ## 一、添加DW插件
 ### 1、打开扩展程序
 
-<div text-align="center">
+<div style="text-align:'center'">
 <img src="img/Tutorial/step1.gif" width="60%">
 </div>
 <p align="center">图1</p>
