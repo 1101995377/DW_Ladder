@@ -371,7 +371,6 @@
 
 (function() {
   var __hasProp = {}.hasOwnProperty;
-
   angular.module('omega').controller('MasterCtrl', function($scope, $rootScope, $window, $q, $modal, $state, profileColors, profileIcons, omegaTarget, $timeout, $location, $filter, getAttachedName, isProfileNameReserved, isProfileNameHidden, dispNameFilter, downloadFile) {
     var checkFormValid, diff, onOptionChange, showFirstRun, showFirstRunOnce, tr, type, _ref, _ref1, _ref2;
     if (((typeof browser !== "undefined" && browser !== null ? (_ref = browser.proxy) != null ? _ref.register : void 0 : void 0) != null) || ((typeof browser !== "undefined" && browser !== null ? (_ref1 = browser.proxy) != null ? _ref1.registerProxyScript : void 0 : void 0) != null)) {
@@ -572,9 +571,11 @@
     };
     $scope.updatingProfile = {};
     $rootScope.updateProfile = function(name) {
+      //$rootScope.profileByName("启用").pacUrl=$scope.$$childHead.controller.$$scope.model;
+      //$rootScope.options['+启用'].pacUrl=$scope.$$childHead.controller.$$scope.model;
+      $scope.$$childHead.controller.$$scope.model="";
       document.getElementById("update-message").style.display="none";
       document.getElementById("loadingSpinner").style.display="block";
-      console.log($rootScope.options['+启用'].pacUrl);
       if($rootScope.optionsOld['+启用']){
         var oldPacUrl=$rootScope.optionsOld['+启用'].pacUrl
       }
@@ -583,10 +584,10 @@
           var error, profileName, result, singleErr, success;
           success = 0;
           error = 0;
+          console.log(results);
           for (profileName in results) {
             if (!__hasProp.call(results, profileName)) continue;
             result = results[profileName];
-            console.log(result);
             if (result instanceof Error) {
               error++;
             } else {
@@ -731,13 +732,13 @@
     $scope.pacUrlCtrl = {
       ctrl: null
     };
-    console.log($scope.profile);
       set = OmegaPac.Profiles.referencedBySet($scope.profile, $scope.options);
       $scope.referenced = Object.keys(set).length > 0;
       oldPacUrl = null;
       oldLastUpdate = null;
       oldPacScript = null;
       onProfileChange = function(profile, oldProfile) {
+        console.log($scope.profile);
         if (!(profile && oldProfile)) {
           return $scope.pacUrlIsFile = $scope.isFileUrl(profile.pacUrl);
         }
