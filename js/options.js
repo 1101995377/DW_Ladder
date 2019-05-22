@@ -65,6 +65,7 @@
     });
 
 }).call(this);
+
 (function() {
     $script.ready('om-state', updateMenuByState);
     return;
@@ -77,3 +78,21 @@
         }
     }
 })();
+
+(function() {
+    OmegaPopup.applyProfile = applyProfile;
+    return;
+
+    function closePopup() {
+        window.close();
+        document.body.style.opacity = 0;
+        setTimeout(function() { history.go(0); }, 3000);
+    }
+
+    function applyProfile(profileName) {
+        $script.ready('om-target', function() {
+            OmegaTargetPopup.applyProfile(profileName, closePopup);
+        });
+    }
+})();
+
