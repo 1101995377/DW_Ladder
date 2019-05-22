@@ -35,10 +35,11 @@
 		<div id="main">
 			<div>
 				<div id="pac-head">PAC脚本地址</div>
-				<div id="pac-input" input-group-clear model="profile.pacUrl">
-					<input ng-model="model" ng-attr-type="text"
-					       placeholder="请输入PAC脚本地址"
-					       ng-change="modelChange()"/>
+				<div id="pac-input">
+					<input input-group-clear id="pac-input-input"
+					       type="text"
+					       ng-model="model"
+					       placeholder="请输入PAC脚本地址"/>
 				</div>
 				<div id="pac-button" class="row" ng-show="profile.pacUrl &amp;&amp; !pacUrlIsFile">
 					<div id="pac-button-div1" class="col-xs-6">

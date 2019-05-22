@@ -132,6 +132,7 @@
             value = results[key];
             results[key] = decodeError(value);
           }
+          console.log(results);
           return results;
         }).then(omegaTarget.refresh);
       },
