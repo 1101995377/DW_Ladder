@@ -22,16 +22,6 @@
         }
       });
     }
-    /*chrome.contextMenus.create({
-      title: chrome.i18n.getMessage('popup_reportIssues'),
-      contexts: ["browser_action"],
-      //onclick: OmegaDebug.reportIssue
-    });
-    chrome.contextMenus.create({
-      title: chrome.i18n.getMessage('popup_errorLog'),
-      contexts: ["browser_action"],
-      //onclick: OmegaDebug.downloadLog
-    });*/
   }
 
 }).call(this);

@@ -64,32 +64,6 @@
         };
     });
 
-    /*angular.module('omega').factory('omegaDebug', function ($window, $rootScope, $injector) {
-        var omegaDebug, _ref;
-        omegaDebug = (_ref = $window.OmegaDebug) != null ? _ref : {};
-        if (omegaDebug.downloadLog == null) {
-            omegaDebug.downloadLog = function () {
-                var blob, downloadFile, _ref1;
-                downloadFile = (_ref1 = $injector.get('downloadFile')) != null ? _ref1 : saveAs;
-                blob = new Blob([localStorage['log']], {
-                    type: "text/plain;charset=utf-8"
-                });
-                return downloadFile(blob, "OmegaLog_" + (Date.now()) + ".txt");
-            };
-        }
-        if (omegaDebug.reportIssue == null) {
-            omegaDebug.reportIssue = function () {
-                $window.open('https://github.com/FelisCatus/SwitchyOmega/issues/new?title=&body=');
-            };
-        }
-        if (omegaDebug.resetOptions == null) {
-            omegaDebug.resetOptions = function () {
-                return $rootScope.resetOptions();
-            };
-        }
-        return omegaDebug;
-    });*/
-
     angular.module('omega').factory('downloadFile', function () {
         var _ref;
         if ((typeof browser !== "undefined" && browser !== null ? (_ref = browser.downloads) != null ? _ref.download : void 0 : void 0) != null) {
