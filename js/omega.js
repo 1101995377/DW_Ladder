@@ -64,7 +64,7 @@
         };
     });
 
-    angular.module('omega').factory('omegaDebug', function ($window, $rootScope, $injector) {
+    /*angular.module('omega').factory('omegaDebug', function ($window, $rootScope, $injector) {
         var omegaDebug, _ref;
         omegaDebug = (_ref = $window.OmegaDebug) != null ? _ref : {};
         if (omegaDebug.downloadLog == null) {
@@ -88,7 +88,7 @@
             };
         }
         return omegaDebug;
-    });
+    });*/
 
     angular.module('omega').factory('downloadFile', function () {
         var _ref;
@@ -118,7 +118,7 @@
 
 }).call(this);
 
-(function () {
+/*(function () {
     angular.module('omega').controller('FixedProfileCtrl', function ($scope, $modal, trFilter) {
         var defaultLabel, defaultPort, onBypassListChange, onProxyChange, proxyProperties, scheme, socks5AuthSupported,
             _fn, _i, _j, _len, _len1, _ref, _ref1, _ref2;
@@ -266,9 +266,9 @@
         });
     });
 
-}).call(this);
+}).call(this);*/
 
-(function () {
+/*(function () {
     angular.module('omega').controller('IoCtrl', function ($scope, $rootScope, $window, $http, omegaTarget, downloadFile) {
         omegaTarget.state('web.restoreOnlineUrl').then(function (url) {
             if (url) {
@@ -368,7 +368,7 @@
         };
     });
 
-}).call(this);
+}).call(this);*/
 
 (function () {
     var __hasProp = {}.hasOwnProperty;
@@ -524,6 +524,12 @@
             }
             return $rootScope.applyOptions();
         };
+        $rootScope.enterUpdate=function(e){
+            let ev = e||window.event;
+            if(ev.keyCode==13){
+                $rootScope.updateProfile("启用");
+            }
+        }
         $rootScope.modify = function () {
             if (document.getElementById("main").style.display == "block") {
                 document.getElementById("main").style.display = "none";
@@ -531,10 +537,14 @@
                 document.getElementById("own-switch").style.cssText = "padding-bottom:0";
             } else {
                 document.getElementById("main").style.display = "block";
-                document.getElementById("setting").style.cssText = "background-color:rgb(248,249,250);color:#000;height:1.7rem";
-                document.getElementById("own-switch").style.cssText = "padding-bottom:0.3rem";
+                document.getElementById("setting").style.cssText = "background-color:rgb(248,249,250);color:#000;height:2.2rem";
+                document.getElementById("own-switch").style.cssText = "padding-bottom:0.5rem";
             }
         };
+        var defaultPac;
+        $.getJSON("default_pac.json",function(data){
+            defaultPac=data.defaultPac;
+        });
         $rootScope.newProfile = function () {
             var scope;
             scope = $rootScope.$new('isolate');
@@ -554,7 +564,7 @@
                 name: "启用",
                 profileType: 'PacProfile',
                 color: '#0D5',
-                pacUrl: 'http://10.0.0.15/pac.js'
+                pacUrl: defaultPac
             };
             var choice;
             choice = Math.floor(Math.random() * profileColors.length);
@@ -729,7 +739,7 @@
 
 }).call(this);
 
-(function () {
+/*(function () {
     ///新建情景模式显示
     angular.module('omega').controller('PacProfileCtrl', function ($rootScope, $scope, $modal) {
         var oldLastUpdate, oldPacScript, oldPacUrl, onProfileChange, set;
@@ -766,10 +776,10 @@
 
     });
 
-}).call(this);
+}).call(this);*/
 
-(function () {
-    angular.module('omega').controller('QuickSwitchCtrl', function ($scope, $filter) {
+/*(function () {
+    /!*angular.module('omega').controller('QuickSwitchCtrl', function ($scope, $filter) {
         $scope.sortableOptions = {
             tolerance: 'pointer',
             axis: 'y',
@@ -796,19 +806,19 @@
                 return _results;
             })();
         });
-    });
+    });*!/
 
-}).call(this);
+}).call(this);*/
 
-(function () {
+/*(function () {
     angular.module('omega').controller('RuleListProfileCtrl', function ($scope) {
         return $scope.ruleListFormats = OmegaPac.Profiles.ruleListFormats;
     });
 
-}).call(this);
+}).call(this);*/
 
 (function () {
-    angular.module('omega').directive('inputGroupClear', function ($timeout, $rootScope) {
+    angular.module('omega').directive('inputGroup', function ($timeout, $rootScope) {
         return {
             restrict: 'A',
             link: function (scope, element) {
@@ -828,7 +838,7 @@
         };
     });
 
-    angular.module('omega').directive('omegaUpload', function () {
+    /*angular.module('omega').directive('omegaUpload', function () {
         return {
             restrict: 'A',
             scope: {
@@ -862,9 +872,9 @@
                 });
             }
         };
-    });
+    });*/
 
-    angular.module('omega').directive('omegaIp2str', function () {
+    /*angular.module('omega').directive('omegaIp2str', function () {
         return {
             restrict: 'A',
             priority: 2,
@@ -890,12 +900,12 @@
                 });
             }
         };
-    });
+    });*/
 
 }).call(this);
 
 (function () {
-    angular.module('omega').filter('profiles', function (builtinProfiles, profileOrder, isProfileNameHidden, isProfileNameReserved) {
+    /*angular.module('omega').filter('profiles', function (builtinProfiles, profileOrder, isProfileNameHidden, isProfileNameReserved) {
         var builtinProfileList, charCodePlus, profile, _;
         charCodePlus = '+'.charCodeAt(0);
         builtinProfileList = (function () {
@@ -937,7 +947,7 @@
             }
             return result;
         };
-    });
+    });*/
 
     angular.module('omega').filter('tr', function (omegaTarget) {
         return omegaTarget.getMessage;

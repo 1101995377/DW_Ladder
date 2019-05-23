@@ -1,5 +1,5 @@
 (function() {
-  var orderForType;
+  /*var orderForType;
 
   orderForType = {
     'FixedProfile': -2000,
@@ -7,7 +7,7 @@
     'VirtualProfile': 1000,
     'SwitchProfile': 2000,
     'RuleListProfile': 3000
-  };
+  };*/
 
   angular.module('omegaDecoration', []).value('profileIcons', {
     'DirectProfile': 'glyphicon-transfer',
@@ -18,8 +18,8 @@
     'VirtualProfile': 'glyphicon-question-sign',
     'RuleListProfile': 'glyphicon-list',
     'SwitchProfile': 'glyphicon-retweet'
-  }).constant('profileOrder', function(a, b) {
-    var diff;
+  })/*.constant('profileOrder', function(a, b) {
+    /!*var diff;
     diff = (orderForType[a.profileType] | 0) - (orderForType[b.profileType] | 0);
     if (diff !== 0) {
       return diff;
@@ -30,13 +30,13 @@
       return -1;
     } else {
       return 1;
-    }
+    }*!/
   }).constant('getVirtualTarget', function(profile, options) {
-    if ((profile != null ? profile.profileType : void 0) === 'VirtualProfile') {
+    /!*if ((profile != null ? profile.profileType : void 0) === 'VirtualProfile') {
       return options != null ? options['+' + profile.defaultProfileName] : void 0;
-    }
+    }*!/
   }).directive('omegaProfileIcon', function(profileIcons, getVirtualTarget) {
-    return {
+    /!*return {
       restrict: 'A',
       template: '<span ng-style="{color: color || getColor(profile)}"\n  ng-class="{\'virtual-profile-icon\': isVirtual(profile)}"\n  class="glyphicon {{icon || getIcon(profile)}}">\n</span>',
       scope: {
@@ -66,9 +66,9 @@
           return color;
         };
       }
-    };
+    };*!/
   }).directive('omegaProfileInline', function() {
-    return {
+    /!*return {
       restrict: 'A',
       template: '<span omega-profile-icon="profile" options="options"></span>\n{{dispName ? dispName(profile) : profile.name}}',
       scope: {
@@ -76,14 +76,14 @@
         'dispName': '=?dispName',
         'options': '=options'
       }
-    };
+    };*!/
   }).directive('omegaHtml', function($compile) {
-    return {
+    /!*return {
       restrict: 'A',
       link: function(scope, element, attrs, ngModel) {
         var getHtml, locals;
         locals = {
-          $profile: function(profile, dispName, options) {
+          /!*$profile: function(profile, dispName, options) {
             if (profile == null) {
               profile = 'profile';
             }
@@ -94,7 +94,7 @@
               options = 'options';
             }
             return "<span class=\"profile-inline\" omega-profile-inline=\"" + profile + "\"\n  disp-name=\"" + dispName + "\" options=\"" + options + "\"></span>";
-          }
+          }*!/
         };
         getHtml = function() {
           return scope.$eval(attrs.omegaHtml, locals);
@@ -104,7 +104,7 @@
           return $compile(element.contents())(scope);
         });
       }
-    };
-  });
+    };*!/
+  })*/;
 
 }).call(this);

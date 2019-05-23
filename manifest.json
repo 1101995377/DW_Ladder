@@ -32,7 +32,7 @@
       "open_in_tab": true,
       "page": "options.html"
    },
-   "permissions": [ "proxy", "tabs", "alarms", "storage", "webRequest", "webRequestBlocking", "contextMenus", "http://*/*", "https://*/*", "\u003Call_urls>" ],
+   "permissions": [ "proxy", "tabs", "alarms", "storage", "webRequest", "webRequestBlocking", "contextMenus", "activeTab", "activeTab", "\u003Call_urls>" ],
    "commands": {
       "_execute_browser_action": {
          "suggested_key": {

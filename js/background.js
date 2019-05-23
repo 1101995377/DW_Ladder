@@ -1,5 +1,5 @@
 (function() {
-  var Log, OmegaTargetCurrent, Promise, actionForUrl, charCodeUnderscore, dispName, drawContext, drawError, drawIcon, encodeError, external, iconCache, isHidden, options, proxyImpl, refreshActivePageIfEnabled, state, storage, sync, syncStorage, tabs, timeout, unhandledPromises, unhandledPromisesId, unhandledPromisesNextId, _ref, _ref1, _writeLogToLocalStorage,
+  var Log, OmegaTargetCurrent, Promise, actionForUrl, charCodeUnderscore, dispName, drawContext, drawError , encodeError, external, iconCache, isHidden, options, proxyImpl, refreshActivePageIfEnabled, state, storage, sync, syncStorage, tabs, timeout, unhandledPromises, unhandledPromisesId, unhandledPromisesNextId, _ref, _ref1, _writeLogToLocalStorage,
     __slice = [].slice,
     __hasProp = {}.hasOwnProperty;
 
