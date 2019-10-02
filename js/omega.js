@@ -503,21 +503,25 @@
             if(ev.keyCode==13){
                 $rootScope.updateProfile("启用");
             }
-        }
-        $rootScope.modify = function () {
-            if (document.getElementById("main").style.display == "block") {
-                document.getElementById("main").style.display = "none";
-                document.getElementById("setting").style.cssText = "background-color:#FFFFFF;color:#49c5b6;";
-                document.getElementById("own-switch").style.cssText = "padding-bottom:0";
+        };
+        $rootScope.modify=function() {
+            if (document.querySelector("#main").style.display == "block") {
+                document.querySelector("#main").style.display = "none";
+                document.querySelector("#setting").style.cssText = "background-color:#FFFFFF;color:#49c5b6;";
+                document.querySelector("#own-switch").style.cssText = "padding-bottom:0";
             } else {
-                document.getElementById("main").style.display = "block";
-                document.getElementById("setting").style.cssText = "background-color:rgb(248,249,250);color:#000;height:2.2rem";
-                document.getElementById("own-switch").style.cssText = "padding-bottom:0.5rem";
+                document.querySelector("#main").style.display = "block";
+                document.querySelector("#setting").style.cssText = "background-color:rgb(248,249,250);color:#000;height:2.2rem";
+                document.querySelector("#own-switch").style.cssText = "padding-bottom:0.5rem";
             }
         };
         var defaultPac;
+        var defaultName;
+        var defaultColor;
         $.getJSON("default_pac.json",function(data){
             defaultPac=data.defaultPac;
+            defaultName=data.defaultPac;
+            defaultColor=data.defultColor;
         });
         $rootScope.newProfile = function () {
             var scope;
@@ -535,9 +539,9 @@
             scope.options = $scope.options;
             scope.pacProfilesUnsupported = $scope.pacProfilesUnsupported;
             let profile = {
-                name: "启用",
+                name: defaultName,
                 profileType: 'PacProfile',
-                color: '#0D5',
+                color: defaultColor,
                 pacUrl: defaultPac
             };
             var choice;
@@ -558,8 +562,8 @@
         $rootScope.updateProfile = function (name) {
             var regex = /^(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/;
             if (regex.test($scope.model)) {
-                document.getElementById("update-message").style.display = "none";
-                document.getElementById("loadingSpinner").style.display = "block";
+                document.querySelector("#update-message").style.display = "none";
+                document.querySelector("#loadingSpinner").style.display = "block";
                 if ($rootScope.optionsOld['+启用']) {
                     var oldPacUrl = $rootScope.optionsOld['+启用'].pacUrl;
                 }
@@ -578,7 +582,7 @@
                             }
                         }
                         if (error === 0) {
-                            document.getElementById("loadingSpinner").style.display = "none";
+                            document.querySelector("#loadingSpinner").style.display = "none";
                             document.querySelector('#update-message').textContent = "更新成功";
                             document.querySelector('#update-message').title = "";
                             document.querySelector('#update-message').style = "color:#0C0;font-size:0.5rem";
@@ -599,7 +603,7 @@
                         var message, _ref2, _ref3, _ref4;
                         message = tr('options_profileDownloadError_' + err.name, [(_ref2 = (_ref3 = err.statusCode) != null ? _ref3 : (_ref4 = err.original) != null ? _ref4.statusCode : void 0) != null ? _ref2 : '']);
                         if (message) {
-                            document.getElementById("loadingSpinner").style.display = "none";
+                            document.querySelector("loadingSpinner").style.display = "none";
                             document.querySelector('#update-message').textContent = "更新失败";
                             document.querySelector('#update-message').style = "color:#F00;font-size:1rem;";
                             document.querySelector('#update-message').title = message;
@@ -622,7 +626,7 @@
                     });
                 });
             } else if($scope.model == undefined){
-                document.getElementById("update-message").style.display = "none";
+                document.querySelector("update-message").style.display = "none";
             }else {
                 $scope.model = "";
                 document.querySelector('#update-message').textContent = "更新失败";

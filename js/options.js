@@ -65,34 +65,3 @@
     });
 
 }).call(this);
-
-(function() {
-    $script.ready('om-state', updateMenuByState);
-    return;
-    function updateMenuByState() {
-        var state = OmegaPopup.state;
-        if(state.currentProfileName=="direct"){
-            document.getElementById('onoffswitch').checked=false;
-        }else{
-            document.getElementById('onoffswitch').checked=true;
-        }
-    }
-})();
-
-(function() {
-    OmegaPopup.applyProfile = applyProfile;
-    return;
-
-    function closePopup() {
-        window.close();
-        document.body.style.opacity = 0;
-        setTimeout(function() { history.go(0); }, 3000);
-    }
-
-    function applyProfile(profileName) {
-        $script.ready('om-target', function() {
-            OmegaTargetPopup.applyProfile(profileName, closePopup);
-        });
-    }
-})();
-
